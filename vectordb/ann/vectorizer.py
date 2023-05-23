@@ -21,18 +21,15 @@ class Vectorizer:
         numeric_columns = [key for key, value in data_type.items()
                            if value == 'number']
         numeric_data = data[numeric_columns].fillna(0).values
-        print(f'numeric_data {numeric_data} type: {type(numeric_data)}')
         vectors = None
         for text_column in text_columns:
             text_data = data[text_column].fillna(
                 '').astype(str).values.flatten()
             if init_vectorizers:
-                print('creating vectorizer')
                 vectorizer = TfidfVectorizer()
                 self.vectorizers[text_column] = vectorizer
                 vector = vectorizer.fit_transform(text_data)
             else:
-                print('using vectorizer')
                 vectorizer = self.vectorizers[text_column]
                 vector = vectorizer.transform(text_data)
             
